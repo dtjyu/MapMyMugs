@@ -1,3 +1,5 @@
+//https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4
+
 // BASE SETUP
 // =============================================================================
 
@@ -13,7 +15,7 @@ var mongoose = require('mongoose');
 // Connect to MongoDB and create/use database called todoAppTest
 mongoose.Promise = global.Promise; //http://stackoverflow.com/questions/38138445/node3341-deprecationwarning-mongoose-mpromise
 mongoose.connect('mongodb://localhost/littlegeorge');
-var Collection = require('./app/models/collection');
+var Mug = require('./app/models/mug');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -39,18 +41,18 @@ router.get('/', function(req, res) {
 });
 
 // more routes for our API will happen here
-// on routes that end in /collections
+// on routes that end in /mugs
 // ----------------------------------------------------
-router.route('/collections')
+router.route('/mugs')
 
-    // create a collection (accessed at POST http://localhost:8080/api/collections)
+    // create a mug (accessed at POST http://localhost:8080/api/mugs)
     .post(function(req, res) {
         
-        var collection = new Collection();      // create a new instance of the Collection model
-        collection.user_id = req.body.user_id;  // set the collections name (comes from the request)
+        var mug = new Mug();      // create a new instance of the Mug model
+        mug.user_id = req.body.user_id;  // set the mugs name (comes from the request)
 
-        // save the collection and check for errors
-        collection.save(function(err) {
+        // save the mug and check for errors
+        mug.save(function(err) {
             if (err)
                 res.send(err);
 
@@ -59,57 +61,57 @@ router.route('/collections')
         
     })
 
-    // get all the collections (accessed at GET http://localhost:8080/api/collections)
+    // get all the mugs (accessed at GET http://localhost:8080/api/mugs)
     .get(function(req, res) {
-        Collection.find(function(err, collections) {
+        Mug.find(function(err, mugs) {
             if (err)
                 res.send(err);
 
-            res.json(collections);
+            res.json(mugs);
         });
     });
 
-// on routes that end in /collections/:collection_id
+// on routes that end in /mugs/:mug_id
 // ----------------------------------------------------
-router.route('/collections/:collection_id')
+router.route('/mugs/:mug_id')
 
 
-    // get the collection with that id (accessed at GET http://localhost:8080/api/collections/:collection_id)
+    // get the mug with that id (accessed at GET http://localhost:8080/api/mugs/:mug_id)
     .get(function(req, res) {
-        Collection.findById(req.params.collection_id, function(err, collection) {
+        Mug.findById(req.params.mug_id, function(err, mug) {
             if (err)
                 res.send(err);
-            res.json(collection);
+            res.json(mug);
         });
     })
 
-    // update the collection with this id (accessed at PUT http://localhost:8080/api/collections/:collection_id)
+    // update the mug with this id (accessed at PUT http://localhost:8080/api/mugs/:mug_id)
     .put(function(req, res) {
 
-        // use our collection model to find the collection we want
-        Collection.findById(req.params.collection_id, function(err, collection) {
+        // use our mug model to find the mug we want
+        Mug.findById(req.params.mug_id, function(err, mug) {
 
             if (err)
                 res.send(err);
 
-            collection.user_id = req.body.user_id;  // update the collections info
+            mug.user_id = req.body.user_id;  // update the mugs info
 
-            // save the collection
-            collection.save(function(err) {
+            // save the mug
+            mug.save(function(err) {
                 if (err)
                     res.send(err);
 
-                res.json({ message: 'collection updated!' });
+                res.json({ message: 'mug updated!' });
             });
 
         });
     })
 
-    // delete the collection with this id (accessed at DELETE http://localhost:8080/api/collections/:collection_id)
+    // delete the mug with this id (accessed at DELETE http://localhost:8080/api/mugs/:mug_id)
     .delete(function(req, res) {
-       Collection.remove({
-            _id: req.params.collection_id
-        }, function(err, collection) {
+       Mug.remove({
+            _id: req.params.mug_id
+        }, function(err, mug) {
             if (err)
                 res.send(err);
 

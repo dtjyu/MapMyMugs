@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise; //http://stackoverflow.com/questions/38138445
 mongoose.connect('mongodb://localhost/littlegeorge');
 
 // Create a schema
-var CollectionSchema = new mongoose.Schema({
+var MugSchema = new mongoose.Schema({
   user_id: String,
   city: String,
   image_location: String,
@@ -14,16 +14,14 @@ var CollectionSchema = new mongoose.Schema({
 });
 
 // Create a model based on the schema
-var Collection = mongoose.model('Collection', CollectionSchema);
+var Mug = mongoose.model('Mug', MugSchema);
 
 // Create a todo in memory
-var collection = new Collection({user_id: 'littlegeorge00', city: 'new york', image_location: 'Getting there...'});
+var mug = new Mug({user_id: 'little_george', city: 'new york', image_location: 'Getting there...'});
 // Save it to database
-collection.save(function(err){
+mug.save(function(err){
   if(err)
     console.log(err);
   else
-    console.log(collection);
+    console.log(mug);
 });
-
-process.exit();
