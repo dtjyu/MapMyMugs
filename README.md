@@ -2,7 +2,7 @@
 
 ### Start MongoDB (in Windows Command Line Prompt)
 ```
-mongod
+> mongod
 ```
 
 ### Start node.js backend (in Windows Powershell)
